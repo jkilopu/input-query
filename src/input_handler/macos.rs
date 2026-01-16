@@ -1,8 +1,6 @@
 //! macOS implementation using Core Graphics Event APIs.
 
 use crate::input_handler::KeyCode;
-use core_graphics::event::{CGEventSourceStateID, CGEventType, EventField};
-use core_graphics::event_source::CGEventSource;
 
 /// macOS-specific input handler using CGEventSourceKeyState.
 ///
@@ -32,12 +30,10 @@ impl InputHandler {
     /// `true` if the key is currently pressed, `false` otherwise.
     pub fn is_pressed(&self, key: KeyCode) -> bool {
         let keycode = Self::to_keycode(key);
-        unsafe {
-            core_graphics::event::CGEventSourceKeyState(
-                CGEventSourceStateID::CombinedSessionState,
-                keycode
-            )
-        }
+        objc2_core_graphics::CGEventSource::key_state(
+            objc2_core_graphics::CGEventSourceStateID::CombinedSessionState,
+            keycode,
+        )
     }
 
     fn to_keycode(key: KeyCode) -> u16 {

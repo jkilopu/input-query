@@ -16,4 +16,4 @@ evdev = "0.13.1"
 windows = { version = "0.58", features = ["Win32_UI_Input_KeyboardAndMouse"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-core-graphics = "0.24"
+objc2-core-graphics = { version = "0.3", features = ["CGEventSource", "CGRemoteOperation"]}
